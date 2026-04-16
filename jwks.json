@@ -1,12 +1,12 @@
 {
-    "p": "-1Y5BmO2ZU4p0KagshVW1HEkZw_1W6dvVdMpWE6XBDE4NFNuuB6Q3h5Z9w69rKwHmAj-0Gk6IugM8gnYWuBrIkC_8Dtu8-2LjgbSYx_dZKw77Ss-Ums9f2bj6mL6hvSJCGHqyCqRYfPEoJxXHs_vOGqVXgs_hOa_DBPzS1Rj-20",
-    "kty": "RSA",
-    "q": "zcoxXQQNYKrCyGz92b4Q599s0JL-21UP8xs_24Q3_q1O5FMTfZloq2DaQ0OvI1tfpOf63KVmKi6SvE8lFgzYG_3chAT84oa2bEHZ5j6zA5jNHMnj5V3-F4WkeFvLa_Gws2dqfjNxB718zT0_dYbUFiVYELp9lczFhsX0LVpCyAs",
-    "d": "O9UEZMcGQ_HOyrgPQmj4ZsmTyu1qMbkQW1ueJ6DaRZVCrzS-GW6kDECf9KlH826Nq8rsg6vmgrF8cVN6HT0qaZJrcVWaqINMAMfYsLCTY7G9kDwhTDfERGhKd1N4M_AZDpo29ciTeyAjTQcxREL6z0zkWNQd6a0RmVPKLqzvUsHgJp3XjbVv6BeyuQdEyRfkjoOZ72We5e7LWELZM1E65pzfyuIbmzsOYXszLDI7MfpSGjKBK2ExosaXEwhjcKkfiMTD1SMlPeAqd-ryTowllKUFW9Nfsr--ojKnyL-qYySROERKWiMX7MoLONJ1HpRrfKBNjD1AJodAvWSdgR41gQ",
-    "e": "AQAB",
-    "kid": "f348c1c7-f2a7-4b1e-9116-6ed7e823081f",
-    "qi": "c1m-K-WSnaAQ4T8Wv-UPRyBLhpUJQEDBb3hbst6w_Qk7lE3-7bxDMkIavEw-TiasPJz5bPAE60prO1w-kcLttuc_LQ4Ygtuq8CxidZ_nJ2n3af2Ck2lARELTQsPaub_xu2HumF7qm3uxHUltMfiCjtC-8M6ts3kjqXQuv8_FHw",
-    "dp": "e_eyVtF11I_yFgUp-8yEsHJB90eqyJNUWeu2V-UjnaC9TSnd0ZjZ8YTc8PvnWDTd5gKB1MAiObdlMzjh6ykIDrQLN-3Isy32iI4a1WORKqe9QyTyL2rPwXg5cJFzan9Q276YNDSy0rKOyH10hzEemCASHnnD0cSSdN2eQgiU7B0",
-    "dq": "lGO87p6SaucXJ2D4Nz-HfzurgkbMwSl4I8u9YzPXEKy1m4yQHFw3joR7Pk-bBXrI3-drDBm0LqyAoIrNajX-y0hl70iNdWbAOhXN4unJOcm_9Yda7rS1GQ8EBsniSEbyLJtgvfmoAnXPfUsx7DQ50HJDK2TeU9thf4pURTO1vfs",
-    "n": "ygqOKfAbKKCkkiKIQ267MgtTNkFH9KV8_4ZZ8ubpFK0q5sW3KiqZJxr2yJ3RhrvYq7HPptaO3Do80ZGP8Yil-MhZiI-rjm4D2kX7Qi4P4oVl9jVqREmpa5asNZQmFg7x17uxs5hJfkD7UdBH6DUr7YeKT60lv5CBPsCFagoaln_RrjZyVLsWxVFo966Okv34Vil-YHfiuExwfXobAFJCSWuIm48rV505rOqiQTDC_-Da3TKY-tGlkcXMp34N2qUr6I-JEJsJwIRbQtXJY5vbuQo54FruNiAr8uGUR9dLyYJkKQKUOQrhxs7vroEGh233M9r-qS3Bemv6HUx-4NL1rw"
+  "keys": [
+    {
+      "alg": "RS256",
+      "e": "AQAB",
+      "kid": "f348c1c7-f2a7-4b1e-9116-6ed7e823081f",
+      "kty": "RSA",
+      "n": "ygqOKfAbKKCkkiKIQ267MgtTNkFH9KV8_4ZZ8ubpFK0q5sW3KiqZJxr2yJ3RhrvYq7HPptaO3Do80ZGP8Yil-ehV6KHvbGySre7QMTtxTuApiWiaqZ3j7edGILPNPv6WdTOj2Pdoxi69ux27r6NOeWM48YC3ySy7mKwWOMddrxdm1hCG4YBv-slMczxOWplt_cdzRmmaWR7zTkHSuJ24iYZsuSGrS2jkiUAJR6JnBxMXeoRUmSoWaoeF1zGvs5Thu7bvnd9yhz2Alle6eJ0DjOYP121fNtH5TnXHb1Awo7oUnOS8qhzb9OFiXSFumZeMfVzAsV8jcrvdZQqaUaYcIan67JK9SqZcQ",
+      "use": "sig"
+    }
+  ]
 }
