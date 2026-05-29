@@ -1,0 +1,38 @@
+[Olicyber] Cookie Monster Army 
+
+Here the attack is feasible because in te cookie (encoded in base64) are present also information about the user, so we can simply modify it in the admin one. Probably there is no server-side checks.
+
+[Olicyber] A TOO small reminder
+
+Here the Attack is feasible because the session id stored in the cookie doesn't have enough entropy and length, so we can simply enumerate every id from 0 to N in order to find the one related to the admin one.
+
+[FlagMail]
+
+Here the attack is feasible because the session cookie does not have enougth entropy, since is simply the UNIX ephoch (with seconds and miliseconds) when the token is generated, since the admin token is generated at the creation of the istance and (we can see the right hour and minutes in the bottom as "admin last login") we have to simply enumerate all the seconds (from 00 to 59) and miliseconds(from 000 to 999) so only the last 5 numbers.
+
+[NeonArcade]
+
+Here the attack is feasible even if the token is signed because the "settings" tab allow the changing of the displayed name and theme, but it does not check field "role" is changed so is possible to forge a token and let it signed by the server
+
+[KEYVAULT]
+Here the attack is possible because the server trust the jku link (where is the public information of the signing key). So it's possible to modify it providing a crafted link where is a key  controlled by the client
+
+ https://toto001011.github.io/OffSecCtf/jwks.json --> i store the jwks file here
+
+ad i modify and sign the jwt token in the following way:
+{
+  "alg": "RS256",
+  "jku": "https://toto001011.github.io/OffSecCtf/jwks.json",
+  "kid": "f348c1c7-f2a7-4b1e-9116-6ed7e823081f",
+  "typ": "JWT"
+}.
+{
+  "sub": "toto",
+  "user_id": 4,
+  "role": "admin",
+  "iat": 1778429416,
+  "exp": 1778433016
+}.
+SIGNATURE
+
+using a BurpSuite jwt extension
