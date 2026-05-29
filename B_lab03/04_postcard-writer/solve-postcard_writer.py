@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 from pwn import *
 """
-The idea here is to perform a ret2libc attack developed in 2 steps, first we calculate the libc base addres throught the puts function, in fact we are able to print the got address of the puts function starting from the plt address(which is a pointer to the got yable that contanin the actual addresses) and then compute the libc base. At this point we are able to compose a valid ROP chain to spawn a shell
+The idea here is to perform a ret2libc attack developed in 2 steps, first we calculate the libc base addres throught the puts function, 
+in fact we are able to print the got address of the puts function starting from the plt address
+(which is a pointer to the got table that contanin the actual addresses) and then compute the libc base. 
+At this point we are able to compose a valid ROP chain to spawn a shell
 
 """
 context.binary = elf = ELF('./ret2libc_home', checksec=False)

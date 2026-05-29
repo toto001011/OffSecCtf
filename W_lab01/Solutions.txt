@@ -1,0 +1,24 @@
+1#LabResult
+
+Praticamente, siccome i report sono indicizzati attraverso dei numeri "lato" user, posso cambiare arbitrariamente i numeri (e i report che vedo)
+#------------------------------------------------------#
+
+2# SwagShop
+
+Posso mettere nel carrello gli oggetti, una volta che la quantità arrivato a zero e li rimuovo se procedo al checkout il totale viene aggiunto nel wallet aumentano il denaro disponibile
+#------------------------------------------------------#
+
+3#Mission Control
+
+Qui la vurnerabilità sta nel "X-Clearance-Level" che viene settato nell'user e non nel server, basta cambiare "X-Clearance-Level: operator" in "X-Clearance-Level: commander"
+#------------------------------------------------------#
+
+4#Al Dente
+
+Qui la vulnerabiltà sta nel mancato controllo delle api del "role field", infatti bisogna editare il profilo e aggiungere la riga "role:head_chef" oltre a quelle "mail" e "name"
+#------------------------------------------------------#
+
+#5Ticket Vault
+
+Qui la vulnerabità sta del modo in  cui vengono indicizzati i ticket, se si va nella sezione "my Tickets" si puo intercettare il primo ticket inviato e cambiare l'id in 1
+

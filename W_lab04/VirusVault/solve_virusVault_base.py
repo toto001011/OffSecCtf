@@ -10,7 +10,7 @@ Quindi faccio l'echo della variabile di ambiente $FLAG e la passo al comando cut
 
 
 
-URL = "https://5594c24c-7412-44e6-b7c2-4331283cf0a7.offsec.m0lecon.it//scan"
+URL = "https://d9f2d107-3d38-4202-8948-e7ed9321ade3.offsec.m0lecon.it/scan"
 
 
 CHARSET = string.ascii_letters + string.digits + "{}_-"#--> definisco il charset da provare
