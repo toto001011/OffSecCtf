@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 from pwn import *
 """
+DOUBLE FREE
 The idea here is to point the global handler to GLOBAL_HANDLER memory region, enabling us to write inside it
 then we can write into write inside global handlare the win() addres 
 now we can trigger the execution of win()
 
 
-To do is two MALLOC are necessary since if we don't put even the second malloc inside the tcache list its not taken from there and we can't control it
+To do is two MALLOC are necessary since if we don't put even the second malloc inside the tcache 
+list its not taken from there and we can't control it.
+Is not possible to do it with a single malloc because the memory that we want to write is outsude the chunck
 #---- STEP 1----
 1)CREATE 2 malloc
 2)FREE those malloc in order to put it into the TCACHE LIST (so we can edit it)
@@ -15,8 +18,6 @@ To do is two MALLOC are necessary since if we don't put even the second malloc i
 
 +---------------------+ 
 | fd |                   <-- &GLOBAL_HANDLER
-+---------------------+
-| bk | 8 B 
 +---------------------+
 | key  | 8 B
 +---------------------+
@@ -28,11 +29,9 @@ To do is two MALLOC are necessary since if we don't put even the second malloc i
     we pass as data the pointer to win()
     
 
-    MALLOC1                                            MALLOC2(GLOBAL_HANDLER memory region)
+    MALLOC1                                       MALLOC2(GLOBAL_HANDLER memory region)
 +---------------------+                         +---------------------+ 
 | fd |                   <-- &GLOBAL_HANDLER    | fd |                   <-- &win()
-+---------------------+                         +---------------------+
-| bk | 8 B                                      | bk | 8 B 
 +---------------------+                         +---------------------+
 | key  | 8 B                                    | key  | 8 B
 +---------------------+                         +---------------------+

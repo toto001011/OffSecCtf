@@ -1,15 +1,32 @@
 #!/usr/bin/env python3
-from pwn import *
-import os
 
-context.binary = elf = ELF('./whisper', checksec=False)
-libc = ELF('./libc.so.6', checksec=False)
+from pwn import *
+
+exe = ELF("./whisper_patched")
+libc = ELF("./libc.so.6")
+ld = ELF("./ld-linux-x86-64.so.2")
+
+context.binary = exe
+
 
 def conn():
-    if args.REMOTE:
-        return remote('localhost', 1337)
-    return process(elf.path)
+    if args.LOCAL:
+        r = process([exe.path])
+        if args.GDB:
+            gdb.attach(r)
+    else:
+        r = remote("addr", 1337)
 
-p = conn()
+    return r
 
-p.interactive()
+
+def main():
+    r = conn()
+
+    # good luck pwning :)
+
+    r.interactive()
+
+
+if __name__ == "__main__":
+    main()
