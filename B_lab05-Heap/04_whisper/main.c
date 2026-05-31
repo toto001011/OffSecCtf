@@ -63,7 +63,7 @@ int main(void) {
         case 2: {
             int i = read_index();
             if (i < 0) { puts("[-] bad index"); break; }
-            free(notes[i].content);                        
+            free(notes[i].content);   // --> system(bin/sh)                     
             puts("[+] deleted.");
             break;
         }
