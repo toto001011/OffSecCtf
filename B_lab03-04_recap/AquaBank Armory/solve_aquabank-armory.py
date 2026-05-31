@@ -2,7 +2,8 @@ from pwn import *
 
 """
 The idea is to 
-Write into the .bss section of the binary the string /bin/bash\x00, and then call EXECVE giving the witten address (of the .bss section) as the string pointer.
+Write into the .bss section of the binary the string /bin/bash\x00, and then call EXECVE giving the witten address
+ (of the .bss section) as the string pointer.
 
 
 """
