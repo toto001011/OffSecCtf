@@ -15,6 +15,7 @@
 
 
 [AUTOGRADE test]
+It's a SSTI(Server Side Template Injection) using the pyhton environment
 from GitHub repository --> https://github.com/yaklang/hack-skills/blob/main/skills/sandbox-escape-techniques/PYTHON_SANDBOX_ESCAPE.md
 
 # Start from any object literal
